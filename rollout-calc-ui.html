@@ -2,8 +2,12 @@
 <link href="../iron-form/iron-form.html" rel="import">
 <link href="../paper-input/paper-input.html" rel="import">
 <link href="../paper-button/paper-button.html" rel="import">
+<link href="../paper-material/paper-material.html" rel="import">
+<link href="../paper-card/paper-card.html" rel="import">
+<link href="../iron-icons/iron-icons.html" rel="import">
+<link href="../paper-icon-button/paper-icon-button.html" rel="import">
+<link href="../paper-tooltip/paper-tooltip.html" rel="import">
 <link href="rollout-calc.html" rel="import">
-<link href="rollout-result.html" rel="import">
 
 <!--
 `rollout-calc-ui`
@@ -16,11 +20,38 @@
 <dom-module id='rollout-calc-ui'>
 
   <template>
+	  <style is="custom-style">
+		paper-material {
+			padding: 16px;
+			margin-bottom: 8px;
+		}
+		
+		paper-card {
+			width: 100%;
+			
+			--paper-card-actions: {background-color: #512DA8; color: white;}
+			--paper-card-header: {background-color: #4527A0;};
+			--paper-card-header-color: white;
+		}
+	  </style>
+  
+	  <paper-material elevation="4">
       <paper-input name="tyrediameter" label="Tyre diameter" value="{{tyreDiameter}}"></paper-input>
       <paper-input name="spursize" label="Spur gear" value="{{spurGear}}"></paper-input>
       <paper-input name="pinionsise" label="Pinion gear" value="{{pinionGear}}"></paper-input>
 	  <rollout-calc id="rolloutMath"></rollout-calc>
-	  <h2>[[rollout]]</h2>
+	  </paper-material>
+	  <paper-card elevation="1" heading="Rollout">
+		<div class="card-content">
+			<h2>[[rollout]]</h2>
+		</div>
+		<div class="card-actions">
+			<div style="display:inline-block">
+				<paper-icon-button icon="add-circle-outline">Add to catalog</paper-icon-button>
+				<paper-tooltip>Add to favourites</paper-tooltip>
+			</div>
+		</div>
+	  </paper-card>
   </template>
   
   <script>
