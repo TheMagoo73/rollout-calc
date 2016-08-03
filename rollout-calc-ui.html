@@ -1,0 +1,62 @@
+<link href="../polymer/polymer.html" rel="import">
+<link href="../iron-form/iron-form.html" rel="import">
+<link href="../paper-input/paper-input.html" rel="import">
+<link href="../paper-button/paper-button.html" rel="import">
+<link href="rollout-calc.html" rel="import">
+
+<!--
+`rollout-calc-ui`
+
+
+@demo demo/index.html 
+-->
+
+
+<dom-module id='rollout-calc-ui'>
+
+  <template>
+      <paper-input name="tyrediameter" label="Tyre diameter" value="{{tyreDiameter}}"></paper-input>
+      <paper-input name="spursize" label="Spur gear" value="{{spurGear}}"></paper-input>
+      <paper-input name="pinionsise" label="Pinion gear" value="{{pinionGear}}"></paper-input>
+      <paper-button id="calcButton" raised>Calculate</paper-button>
+	  <rollout-calc id="rolloutMath"></rollout-calc>
+  </template>
+  
+  <script>
+    Polymer({
+      is: 'rollout-calc-ui',
+      
+      properties: {
+        tyreDiameter: {
+          type: Number,
+          value: 41.5
+        },
+        spurGear: {
+          type: Number,
+          value: 76
+        },
+        pinionGear: {
+          type: Number,
+          value: 42
+        },
+        rollout: {
+          type: Number,
+		  reflectToAttribute: true
+        }
+      },
+  
+  	  listeners: {
+		'calcButton.tap': '_calcRollout'
+	  },  
+            
+      _calcRollout : function(e){
+		var calculator = this.$.rolloutMath;
+		
+		this.rollout = calculator.calcRollout(this.tyreDiameter, this.pinionGear, this.spurGear);
+	  },
+
+    });
+  </script>
+  
+</dom-module>
+
