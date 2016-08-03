@@ -3,6 +3,7 @@
 <link href="../paper-input/paper-input.html" rel="import">
 <link href="../paper-button/paper-button.html" rel="import">
 <link href="rollout-calc.html" rel="import">
+<link href="rollout-result.html" rel="import">
 
 <!--
 `rollout-calc-ui`
@@ -18,8 +19,8 @@
       <paper-input name="tyrediameter" label="Tyre diameter" value="{{tyreDiameter}}"></paper-input>
       <paper-input name="spursize" label="Spur gear" value="{{spurGear}}"></paper-input>
       <paper-input name="pinionsise" label="Pinion gear" value="{{pinionGear}}"></paper-input>
-      <paper-button id="calcButton" raised>Calculate</paper-button>
 	  <rollout-calc id="rolloutMath"></rollout-calc>
+	  <h2>[[rollout]]</h2>
   </template>
   
   <script>
@@ -41,18 +42,18 @@
         },
         rollout: {
           type: Number,
-		  reflectToAttribute: true
+		  reflectToAttribute: true,
+		  notify: true,
+		  computed: '_calcRollout(tyreDiameter, spurGear, pinionGear)'
         }
       },
   
-  	  listeners: {
-		'calcButton.tap': '_calcRollout'
-	  },  
-            
-      _calcRollout : function(e){
+      _calcRollout : function(tyreDiameter, spurGear, pinionGear){
 		var calculator = this.$.rolloutMath;
 		
-		this.rollout = calculator.calcRollout(this.tyreDiameter, this.pinionGear, this.spurGear);
+		var rollout = calculator.calcRollout(tyreDiameter, pinionGear, spurGear);
+		
+		return (Math.round(rollout * 100))/100;
 	  },
 
     });
