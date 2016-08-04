@@ -33,17 +33,27 @@
 			--paper-card-header: {background-color: #4527A0;};
 			--paper-card-header-color: white;
 		}
+		
+		.centered{
+			width: 100%;
+			text-align: center;
+		}
+		
+		.large{
+			font-size: 250%;
+			font-weight: bold;
+		}
 	  </style>
   
 	  <paper-material elevation="4">
-      <paper-input name="tyrediameter" label="Tyre diameter" value="{{tyreDiameter}}"></paper-input>
-      <paper-input name="spursize" label="Spur gear" value="{{spurGear}}"></paper-input>
-      <paper-input name="pinionsise" label="Pinion gear" value="{{pinionGear}}"></paper-input>
+      <paper-input name="tyrediameter" label="Tyre diameter" value="{{tyreDiameter}}" auto-validate allowed-pattern='[0-9.]'></paper-input>
+      <paper-input name="spursize" label="Spur gear" value="{{spurGear}}" auto-validate allowed-pattern='[0-9.]'></paper-input>
+      <paper-input name="pinionsise" label="Pinion gear" value="{{pinionGear}}" auto-validate allowed-pattern='[0-9.]'></paper-input>
 	  <rollout-calc id="rolloutMath"></rollout-calc>
 	  </paper-material>
 	  <paper-card elevation="1" heading="Rollout">
-		<div class="card-content">
-			<h2>[[rollout]]</h2>
+		<div class="card-content large centered">
+			[[rollout]]
 		</div>
 		<div class="card-actions">
 			<div style="display:inline-block">
@@ -83,6 +93,9 @@
 		var calculator = this.$.rolloutMath;
 		
 		var rollout = calculator.calcRollout(tyreDiameter, pinionGear, spurGear);
+		
+		if(isNaN(rollout) || !isFinite(rollout))
+			return 0;
 		
 		return (Math.round(rollout * 100))/100;
 	  },
